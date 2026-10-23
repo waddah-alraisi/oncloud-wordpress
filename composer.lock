@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2634bf497d028c1dcf1781c9807ebf5b",
+    "content-hash": "a5bf2b9fc4b16687328225055d5467fe",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -5226,6 +5226,24 @@
                 "source": "https://github.com/wp-cli/wp-config-transformer/tree/v1.4.7"
             },
             "time": "2026-10-06T06:18:26+00:00"
+        },
+        {
+            "name": "wpackagist-plugin/polylang",
+            "version": "3.9.1",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/polylang/",
+                "reference": "tags/3.9.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/polylang.3.9.1.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/polylang/"
         },
         {
             "name": "wpackagist-plugin/woocommerce",
