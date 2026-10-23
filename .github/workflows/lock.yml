@@ -1,10 +1,16 @@
-# Resolve the pins into composer.lock and commit it to main (ADR 0052). Run by hand after a pin changes in
-# composer.json, or when Dependabot's pull request changed composer.json only. Needs PLUGIN_REPO_TOKEN (read access to
+# Resolve the pins into composer.lock and commit it to the branch it ran on (ADR 0052). Run by hand after a pin changes
+# in composer.json, or with `add` to bring in a newly allowed plugin (its allowlist entry already on the branch): the
+# newest stable version is resolved and pinned exactly in composer.json. Needs PLUGIN_REPO_TOKEN (read access to
 # oncloud-wordpress-plugin). A commit made with GITHUB_TOKEN starts no other workflow: run `build` afterwards.
 name: lock
 
 on:
   workflow_dispatch:
+    inputs:
+      add:
+        description: A package to add and pin (e.g. wpackagist-plugin/polylang); empty to refresh the lock only
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -18,11 +24,22 @@ jobs:
       - uses: actions/checkout@v5
       - uses: shivammathur/setup-php@v2
         with: { php-version: '8.5', tools: composer, extensions: mysqli, gd, intl, zip, exif, bcmath }
-      - run: composer update --no-dev --no-install --no-interaction --no-progress
-      - run: php bin/check.php
-      - name: Commit composer.lock when it changed
+      - name: Add and pin, or refresh
+        env:
+          ADD: ${{ inputs.add }}
         run: |
-          git add composer.lock
-          if git diff --cached --quiet; then echo "composer.lock unchanged"; exit 0; fi
-          git -c user.name="oncloud-ci" -c user.email="ci@oncloud.om" commit -m "chore: composer.lock from the lock workflow (run ${GITHUB_RUN_ID})"
-          git push origin HEAD:main
+          if [ -n "$ADD" ]; then
+            composer require "$ADD" --no-install --no-interaction --no-progress
+            version="$(composer show --locked "$ADD" --format=json | php -r 'echo json_decode(stream_get_contents(STDIN), true)["versions"][0];')"
+            composer require "$ADD:$version" --no-install --no-interaction --no-progress
+            echo "Pinned $ADD $version"
+          else
+            composer update --no-dev --no-install --no-interaction --no-progress
+          fi
+      - run: php bin/check.php
+      - name: Commit when it changed
+        run: |
+          git add composer.json composer.lock
+          if git diff --cached --quiet; then echo "composer.json and composer.lock unchanged"; exit 0; fi
+          git -c user.name="oncloud-ci" -c user.email="ci@oncloud.om" commit -m "chore: ${{ inputs.add && format('pin {0}', inputs.add) || 'composer.lock' }} from the lock workflow (run ${GITHUB_RUN_ID})"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
