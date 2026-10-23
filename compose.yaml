@@ -16,7 +16,7 @@ services:
     environment: { MARIADB_DATABASE: oncloud, MARIADB_USER: oncloud, MARIADB_PASSWORD: oncloud, MARIADB_ROOT_PASSWORD: oncloud-root }
     volumes: [db:/var/lib/mysql]
   cache:
-    image: valkey/valkey:8-alpine
+    image: valkey/valkey:9-alpine
 secrets:
   composer_auth:
     environment: COMPOSER_AUTH
