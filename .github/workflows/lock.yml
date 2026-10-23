@@ -1,0 +1,28 @@
+# Resolve the pins into composer.lock and commit it to main (ADR 0052). Run by hand after a pin changes in
+# composer.json, or when Dependabot's pull request changed composer.json only. Needs PLUGIN_REPO_TOKEN (read access to
+# oncloud-wordpress-plugin). A commit made with GITHUB_TOKEN starts no other workflow: run `build` afterwards.
+name: lock
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  lock:
+    runs-on: ubuntu-24.04
+    env:
+      COMPOSER_AUTH: '{"github-oauth":{"github.com":"${{ secrets.PLUGIN_REPO_TOKEN }}"}}'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
+        with: { php-version: '8.5', tools: composer, extensions: mysqli, gd, intl, zip, exif, bcmath }
+      - run: composer update --no-dev --no-install --no-interaction --no-progress
+      - run: php bin/check.php
+      - name: Commit composer.lock when it changed
+        run: |
+          git add composer.lock
+          if git diff --cached --quiet; then echo "composer.lock unchanged"; exit 0; fi
+          git -c user.name="oncloud-ci" -c user.email="ci@oncloud.om" commit -m "chore: composer.lock from the lock workflow (run ${GITHUB_RUN_ID})"
+          git push origin HEAD:main

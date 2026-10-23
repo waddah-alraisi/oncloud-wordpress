@@ -132,7 +132,7 @@ if (in_array('--installed', $argv, true)) {
 }
 
 if (! is_file($root.'/composer.lock')) {
-    fwrite(STDERR, "Warning: composer.lock is missing; the build resolves the pins itself. Commit the lock from the CI artifact.\n");
+    fwrite(STDERR, "Warning: composer.lock is missing; the build resolves the pins itself. Run the `lock` workflow.\n");
 }
 
 if ($errors !== []) {

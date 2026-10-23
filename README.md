@@ -79,4 +79,5 @@ Check without Docker: `php bin/check.php && php tests/run.php`
 ## Status
 
 - Phase 1 of `oncloud-documentations/planned/wordpress-platform.md`: version 0.1.0.
-- `composer.lock` comes from the first CI run (artifact `composer.lock`). Commit it after review.
+- `composer.lock` is written by the `lock` workflow (Actions → lock → Run workflow), then `build` runs on it.
+- Dependabot opens weekly pull requests for WordPress, WooCommerce, WP-CLI, the base images and the actions.

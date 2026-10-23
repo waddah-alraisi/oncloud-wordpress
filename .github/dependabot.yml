@@ -1,0 +1,18 @@
+# New WordPress, WooCommerce, WP-CLI, base images and actions arrive as pull requests (ADR 0052): each one is checked,
+# built and smoke-tested by `build` before it reaches main, then rolled out by the pipeline. Nobody updates a site by hand.
+version: 2
+updates:
+  - package-ecosystem: composer
+    directory: /
+    schedule: { interval: weekly, day: monday }
+    versioning-strategy: increase
+    open-pull-requests-limit: 5
+  - package-ecosystem: docker
+    directory: /docker
+    schedule: { interval: weekly, day: monday }
+  - package-ecosystem: docker-compose
+    directory: /
+    schedule: { interval: weekly, day: monday }
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: monthly }
