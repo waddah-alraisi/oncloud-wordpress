@@ -12,7 +12,7 @@ services:
     ports: ["8080:80"]
     volumes: [uploads:/srv/site/web/app/uploads:ro]
   db:
-    image: mariadb:11.4
+    image: mariadb:13.0
     environment: { MARIADB_DATABASE: oncloud, MARIADB_USER: oncloud, MARIADB_PASSWORD: oncloud, MARIADB_ROOT_PASSWORD: oncloud-root }
     volumes: [db:/var/lib/mysql]
   cache:
