@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Government and public bodies",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "primary",
+          "name": "Primary",
+          "color": "#0B3D2E"
+        },
+        {
+          "slug": "secondary",
+          "name": "Secondary",
+          "color": "#14614A"
+        },
+        {
+          "slug": "accent",
+          "name": "Accent",
+          "color": "#B8913A"
+        },
+        {
+          "slug": "surface",
+          "name": "Surface",
+          "color": "#F3F5F2"
+        },
+        {
+          "slug": "background",
+          "name": "Background",
+          "color": "#FFFFFF"
+        },
+        {
+          "slug": "text",
+          "name": "Text",
+          "color": "#14212B"
+        }
+      ]
+    }
+  }
+}

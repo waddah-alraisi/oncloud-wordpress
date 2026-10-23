@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Any organisation",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "primary",
+          "name": "Primary",
+          "color": "#0F334D"
+        },
+        {
+          "slug": "secondary",
+          "name": "Secondary",
+          "color": "#1A4D70"
+        },
+        {
+          "slug": "accent",
+          "name": "Accent",
+          "color": "#E8643B"
+        },
+        {
+          "slug": "surface",
+          "name": "Surface",
+          "color": "#F4F6F8"
+        },
+        {
+          "slug": "background",
+          "name": "Background",
+          "color": "#FFFFFF"
+        },
+        {
+          "slug": "text",
+          "name": "Text",
+          "color": "#14212B"
+        }
+      ]
+    }
+  }
+}

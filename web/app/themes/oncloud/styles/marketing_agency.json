@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Marketing agencies",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "primary",
+          "name": "Primary",
+          "color": "#2B1B5A"
+        },
+        {
+          "slug": "secondary",
+          "name": "Secondary",
+          "color": "#4B2E9C"
+        },
+        {
+          "slug": "accent",
+          "name": "Accent",
+          "color": "#FF6B4A"
+        },
+        {
+          "slug": "surface",
+          "name": "Surface",
+          "color": "#F5F3FB"
+        },
+        {
+          "slug": "background",
+          "name": "Background",
+          "color": "#FFFFFF"
+        },
+        {
+          "slug": "text",
+          "name": "Text",
+          "color": "#14212B"
+        }
+      ]
+    }
+  }
+}

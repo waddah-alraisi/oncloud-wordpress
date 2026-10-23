@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Bakeries and cafés",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "primary",
+          "name": "Primary",
+          "color": "#5A3A22"
+        },
+        {
+          "slug": "secondary",
+          "name": "Secondary",
+          "color": "#8C5A35"
+        },
+        {
+          "slug": "accent",
+          "name": "Accent",
+          "color": "#E3A857"
+        },
+        {
+          "slug": "surface",
+          "name": "Surface",
+          "color": "#FBF6EF"
+        },
+        {
+          "slug": "background",
+          "name": "Background",
+          "color": "#FFFFFF"
+        },
+        {
+          "slug": "text",
+          "name": "Text",
+          "color": "#14212B"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "B2B services",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "primary",
+          "name": "Primary",
+          "color": "#1C2541"
+        },
+        {
+          "slug": "secondary",
+          "name": "Secondary",
+          "color": "#3A506B"
+        },
+        {
+          "slug": "accent",
+          "name": "Accent",
+          "color": "#5BC0BE"
+        },
+        {
+          "slug": "surface",
+          "name": "Surface",
+          "color": "#F2F4F7"
+        },
+        {
+          "slug": "background",
+          "name": "Background",
+          "color": "#FFFFFF"
+        },
+        {
+          "slug": "text",
+          "name": "Text",
+          "color": "#14212B"
+        }
+      ]
+    }
+  }
+}

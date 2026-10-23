@@ -1,0 +1,98 @@
+# OnCloud WordPress (ADR 0052): check, build both images, start a clean site from them, and publish the images.
+# Secret PLUGIN_REPO_TOKEN: a fine-grained GitHub token with read access to waddah-alraisi/oncloud-wordpress-plugin.
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with: { php-version: '8.5', tools: composer }
+      - run: composer validate --no-check-lock --no-check-publish
+      - run: php bin/check.php
+      - run: php tests/run.php
+
+  site:
+    needs: check
+    runs-on: ubuntu-24.04
+    env:
+      COMPOSER_AUTH: '{"github-oauth":{"github.com":"${{ secrets.PLUGIN_REPO_TOKEN }}"}}'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Environment for a throwaway site
+        run: |
+          cp .env.example .env
+          sed -i 's|^ONCLOUD_ENV=.*|ONCLOUD_ENV=staging|' .env
+          for key in AUTH_KEY SECURE_AUTH_KEY LOGGED_IN_KEY NONCE_KEY AUTH_SALT SECURE_AUTH_SALT LOGGED_IN_SALT NONCE_SALT; do
+            sed -i "s|^$key=.*|$key=$(openssl rand -hex 32)|" .env
+          done
+      - run: docker compose build
+      - run: docker compose up -d
+      - name: Install a Storefront site, lockdown on (staging)
+        run: |
+          for i in $(seq 1 30); do docker compose exec -T db mariadb -uoncloud -poncloud -e 'select 1' oncloud && break; sleep 2; done
+          docker compose exec -T php bin/install.sh "OnCloud CI" ci@oncloud.om bakery
+      - name: The site answers, locked down
+        run: |
+          curl -fsS -o /dev/null -w '%{http_code}\n' http://localhost:8080/
+          curl -fsSI http://localhost:8080/ | grep -i '^x-content-type-options: nosniff'
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/xmlrpc.php)" = 403
+          docker compose exec -T php vendor/bin/wp --path=web/wp plugin list --status=active --field=name | tee active.txt
+          grep -qx woocommerce active.txt
+          docker compose exec -T php vendor/bin/wp --path=web/wp eval 'echo DISALLOW_FILE_MODS ? "locked" : "open";' | grep -x locked
+      - name: The lock file this build resolved
+        run: docker compose run --rm --no-deps -T php cat composer.lock > composer.lock
+      - uses: actions/upload-artifact@v4
+        with: { name: composer.lock, path: composer.lock }
+      - if: always()
+        run: docker compose logs --no-color | tail -200
+
+  publish:
+    needs: site
+    if: github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with: { registry: ghcr.io, username: '${{ github.actor }}', password: '${{ secrets.GITHUB_TOKEN }}' }
+      - name: Tags
+        id: tags
+        run: |
+          v="$(cat VERSION)"
+          base=ghcr.io/waddah-alraisi/oncloud-wordpress
+          for t in php nginx; do
+            tags="$base-$t:sha-${GITHUB_SHA::12}"
+            if [[ "$GITHUB_REF" == refs/tags/v* ]]; then tags="$tags,$base-$t:$v"; fi
+            echo "$t=$tags" >> "$GITHUB_OUTPUT"
+          done
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          target: php
+          push: true
+          tags: ${{ steps.tags.outputs.php }}
+          secrets: |
+            composer_auth={"github-oauth":{"github.com":"${{ secrets.PLUGIN_REPO_TOKEN }}"}}
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          target: nginx
+          push: true
+          tags: ${{ steps.tags.outputs.nginx }}
+          secrets: |
+            composer_auth={"github-oauth":{"github.com":"${{ secrets.PLUGIN_REPO_TOKEN }}"}}

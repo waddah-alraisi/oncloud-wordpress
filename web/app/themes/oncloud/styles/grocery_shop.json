@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Grocery shops and mini-markets",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "primary",
+          "name": "Primary",
+          "color": "#1F5130"
+        },
+        {
+          "slug": "secondary",
+          "name": "Secondary",
+          "color": "#2E7D46"
+        },
+        {
+          "slug": "accent",
+          "name": "Accent",
+          "color": "#F2B134"
+        },
+        {
+          "slug": "surface",
+          "name": "Surface",
+          "color": "#F4F8F3"
+        },
+        {
+          "slug": "background",
+          "name": "Background",
+          "color": "#FFFFFF"
+        },
+        {
+          "slug": "text",
+          "name": "Text",
+          "color": "#14212B"
+        }
+      ]
+    }
+  }
+}

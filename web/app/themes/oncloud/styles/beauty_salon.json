@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Beauty salons and spas",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "primary",
+          "name": "Primary",
+          "color": "#6B3A5B"
+        },
+        {
+          "slug": "secondary",
+          "name": "Secondary",
+          "color": "#9C5C86"
+        },
+        {
+          "slug": "accent",
+          "name": "Accent",
+          "color": "#E7B7C8"
+        },
+        {
+          "slug": "surface",
+          "name": "Surface",
+          "color": "#FBF4F7"
+        },
+        {
+          "slug": "background",
+          "name": "Background",
+          "color": "#FFFFFF"
+        },
+        {
+          "slug": "text",
+          "name": "Text",
+          "color": "#14212B"
+        }
+      ]
+    }
+  }
+}

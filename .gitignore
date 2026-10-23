@@ -1,0 +1,7 @@
+/vendor/
+/web/wp/
+/web/app/plugins/*
+/web/app/mu-plugins/oncloud/
+/web/app/uploads/
+/.env
+/build/

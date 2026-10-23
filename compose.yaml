@@ -1,0 +1,23 @@
+# Local and CI: one site from the image, with its database and cache. Production servers run the same two images
+# against managed MySQL and Valkey (plan phases 2 and 7).
+services:
+  php:
+    build: { context: ., dockerfile: docker/Dockerfile, target: php, secrets: [composer_auth] }
+    env_file: .env
+    depends_on: [db, cache]
+    volumes: [uploads:/srv/site/web/app/uploads]
+  nginx:
+    build: { context: ., dockerfile: docker/Dockerfile, target: nginx, secrets: [composer_auth] }
+    depends_on: [php]
+    ports: ["8080:80"]
+    volumes: [uploads:/srv/site/web/app/uploads:ro]
+  db:
+    image: mariadb:11.4
+    environment: { MARIADB_DATABASE: oncloud, MARIADB_USER: oncloud, MARIADB_PASSWORD: oncloud, MARIADB_ROOT_PASSWORD: oncloud-root }
+    volumes: [db:/var/lib/mysql]
+  cache:
+    image: valkey/valkey:8-alpine
+secrets:
+  composer_auth:
+    environment: COMPOSER_AUTH
+volumes: { uploads: {}, db: {} }

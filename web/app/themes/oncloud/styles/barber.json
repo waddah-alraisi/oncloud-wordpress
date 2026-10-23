@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Barbershops",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "primary",
+          "name": "Primary",
+          "color": "#1E1E1E"
+        },
+        {
+          "slug": "secondary",
+          "name": "Secondary",
+          "color": "#3B3B3B"
+        },
+        {
+          "slug": "accent",
+          "name": "Accent",
+          "color": "#C0392B"
+        },
+        {
+          "slug": "surface",
+          "name": "Surface",
+          "color": "#F5F5F5"
+        },
+        {
+          "slug": "background",
+          "name": "Background",
+          "color": "#FFFFFF"
+        },
+        {
+          "slug": "text",
+          "name": "Text",
+          "color": "#14212B"
+        }
+      ]
+    }
+  }
+}
