@@ -10,6 +10,7 @@ require dirname(__DIR__).'/web/app/mu-plugins/oncloud-distribution/lockdown.php'
 $allowlist = [
     'woocommerce' => ['package' => 'wpackagist-plugin/woocommerce', 'required' => 'shop', 'why' => 'the shop'],
     'helper' => ['package' => 'wpackagist-plugin/helper', 'required' => 'always', 'why' => 'test'],
+    'polylang' => ['package' => 'wpackagist-plugin/polylang', 'required' => 'always', 'why' => 'languages'],
 ];
 
 $tests = [
@@ -18,6 +19,7 @@ $tests = [
         && Oncloud_Lockdown::allowedPlugins(['woocommerce/woocommerce.php'], $allowlist, true) === ['woocommerce/woocommerce.php'],
     'a plugin named like an allowed one is not allowed' => fn () => ! Oncloud_Lockdown::allowed('woocommerce-evil/woocommerce.php', $allowlist, true),
     'network-active plugins are filtered by key' => fn () => Oncloud_Lockdown::allowedSitewide(['evil/evil.php' => 1, 'helper/helper.php' => 2], $allowlist, false) === ['helper/helper.php' => 2],
+    'Polylang stays active on a site without a shop' => fn () => Oncloud_Lockdown::allowedPlugins(['polylang/polylang.php', 'woocommerce/woocommerce.php'], $allowlist, false) === ['polylang/polylang.php'],
     'non-strings in the stored list are dropped' => fn () => Oncloud_Lockdown::allowedPlugins([null, 7, 'helper/helper.php'], $allowlist, false) === ['helper/helper.php'],
     'installing plugins is refused' => fn () => Oncloud_Lockdown::mapMetaCap(['install_plugins'], 'install_plugins', false) === ['do_not_allow'],
     'a meta capability mapping to a refused one is refused' => fn () => Oncloud_Lockdown::mapMetaCap(['update_core'], 'update', false) === ['do_not_allow'],

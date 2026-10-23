@@ -3,6 +3,12 @@
 Every release is one image (`ghcr.io/waddah-alraisi/oncloud-wordpress-{php,nginx}:<version>`), rolled out to every
 site by the pipeline: build → staging → canary → shared network → Private Store servers (ADR 0052).
 
+## 0.2.0 — 23 Oct 2026
+
+- Polylang on every site (allowlist `always`): English and Arabic per post and page. Its languages are set up from
+  OnCloud by the companion (plan 4.3); `bin/install.sh` activates it.
+- `lock` workflow: `add` brings in a newly allowed package and pins its newest stable version exactly.
+
 ## 0.1.0 — 23 Oct 2026
 
 Phase 1 of `planned/wordpress-platform.md`: the distribution.

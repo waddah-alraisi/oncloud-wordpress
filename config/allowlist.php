@@ -20,4 +20,9 @@ return [
         'required' => 'shop',
         'why' => 'The shop. Catalogue, prices, stock and orders are OnCloud\'s; WooCommerce shows and sells them.',
     ],
+    'polylang' => [
+        'package' => 'wpackagist-plugin/polylang',
+        'required' => 'always',
+        'why' => 'English and Arabic: a post per language, translated addresses, hreflang, the switcher, RTL per language. OnCloud sends both languages (decided 23 Oct 2026).',
+    ],
 ];

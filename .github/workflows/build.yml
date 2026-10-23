@@ -51,6 +51,7 @@ jobs:
           test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/xmlrpc.php)" = 403
           docker compose exec -T php vendor/bin/wp --path=web/wp plugin list --status=active --field=name | tee active.txt
           grep -qx woocommerce active.txt
+          grep -qx polylang active.txt
           docker compose exec -T php vendor/bin/wp --path=web/wp eval 'echo DISALLOW_FILE_MODS ? "locked" : "open";' | grep -x locked
       - name: The lock file this build resolved
         run: docker compose run --rm --no-deps -T php cat composer.lock > composer.lock

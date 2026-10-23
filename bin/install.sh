@@ -18,6 +18,7 @@ else
 fi
 
 $wp theme activate oncloud
+$wp plugin activate polylang
 $wp option update oncloud_style_variation "$profile"
 $wp rewrite structure '/%postname%/'
 
