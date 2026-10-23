@@ -38,7 +38,7 @@ VOLUME /srv/site/web/app/uploads
 USER www-data
 LABEL org.opencontainers.image.source="https://github.com/waddah-alraisi/oncloud-wordpress"
 
-FROM nginx:1.27-alpine AS nginx
+FROM nginx:1.29-alpine AS nginx
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /srv/site/web /srv/site/web
 LABEL org.opencontainers.image.source="https://github.com/waddah-alraisi/oncloud-wordpress"
