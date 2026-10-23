@@ -54,7 +54,7 @@ jobs:
           docker compose exec -T php vendor/bin/wp --path=web/wp eval 'echo DISALLOW_FILE_MODS ? "locked" : "open";' | grep -x locked
       - name: The lock file this build resolved
         run: docker compose run --rm --no-deps -T php cat composer.lock > composer.lock
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with: { name: composer.lock, path: composer.lock }
       - if: always()
         run: docker compose logs --no-color | tail -200
