@@ -1,18 +1,35 @@
 # New WordPress, WooCommerce, WP-CLI, base images and actions arrive as pull requests (ADR 0052): each one is checked,
 # built and smoke-tested by `build` before it reaches main, then rolled out by the pipeline. Nobody updates a site by hand.
+# Needs the Dependabot secret PLUGIN_REPO_TOKEN (read access to oncloud-wordpress-plugin).
 version: 2
+registries:
+  plugin-repo:
+    type: git
+    url: https://github.com
+    username: x-access-token
+    password: ${{ secrets.PLUGIN_REPO_TOKEN }}
 updates:
   - package-ecosystem: composer
     directory: /
+    registries: [plugin-repo]
     schedule: { interval: weekly, day: monday }
     versioning-strategy: increase
     open-pull-requests-limit: 5
   - package-ecosystem: docker
     directory: /docker
     schedule: { interval: weekly, day: monday }
+  # The local/CI database and cache follow production's managed services, not the newest major.
   - package-ecosystem: docker-compose
     directory: /
     schedule: { interval: weekly, day: monday }
+    ignore:
+      - dependency-name: mariadb
+        update-types: [version-update:semver-major, version-update:semver-minor]
+      - dependency-name: valkey/valkey
+        update-types: [version-update:semver-major]
   - package-ecosystem: github-actions
     directory: /
     schedule: { interval: monthly }
+    groups:
+      actions:
+        patterns: ['*']
