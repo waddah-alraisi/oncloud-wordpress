@@ -19,8 +19,10 @@ fi
 
 $wp theme activate oncloud
 $wp plugin activate polylang
+$wp eval-file bin/polylang-languages.php
 $wp option update oncloud_style_variation "$profile"
 $wp rewrite structure '/%postname%/'
+$wp rewrite flush
 
 if [ "${ONCLOUD_PLAN:-site}" != "site" ]; then
   $wp plugin activate woocommerce

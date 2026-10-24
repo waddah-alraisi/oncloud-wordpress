@@ -74,6 +74,12 @@ $theme = $json($themeDir.'/theme.json') ?? [];
 if (($theme['version'] ?? null) !== 3) {
     $fail('theme.json must be version 3.');
 }
+// The templates OnCloud's content needs (plan 4.4): posts, case studies and their archives.
+foreach (['index', 'home', 'single', 'single-case_study', 'archive', 'archive-case_study', 'page', '404'] as $template) {
+    if (! is_file($themeDir."/templates/{$template}.html")) {
+        $fail("The theme has no templates/{$template}.html.");
+    }
+}
 $slugs = array_column((array) ($theme['settings']['color']['palette'] ?? []), 'slug');
 sort($slugs);
 $found = array_map(static fn (string $f): string => basename($f, '.json'), glob($themeDir.'/styles/*.json') ?: []);

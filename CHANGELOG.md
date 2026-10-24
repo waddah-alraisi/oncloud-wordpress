@@ -3,6 +3,17 @@
 Every release is one image (`ghcr.io/waddah-alraisi/oncloud-wordpress-{php,nginx}:<version>`), rolled out to every
 site by the pipeline: build → staging → canary → shared network → Private Store servers (ADR 0052).
 
+## 0.4.0 — 24 Oct 2026
+
+Plan 4.4 (part a): OnCloud's articles and case studies look right, in English and Arabic.
+
+- `bin/install.sh` sets up Polylang's languages (`bin/polylang-languages.php`): English at the root, Arabic right to
+  left under `/ar/`, case studies translatable.
+- Theme templates: `home`, `single` (date and author), `single-case_study`, `archive`, `archive-case_study`; blocks of
+  its own: `oncloud/author`, `oncloud/type-label`, `oncloud/languages` (the language switch, in the header).
+- CI publishes an article and a case study through the companion and renders every template in both languages: the
+  author, the description, Open Graph, JSON-LD, `dir="rtl"` and the hreflang links.
+
 ## 0.3.1 — 24 Oct 2026
 
 - The companion at `e158959`: the reconciliation counts case studies too (Lane B).

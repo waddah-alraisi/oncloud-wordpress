@@ -59,6 +59,33 @@ jobs:
           # Unsigned, on plain permalinks as OnCloud calls them: refused by the companion (401), not by nginx (405).
           test "$(curl -s -o /dev/null -w '%{http_code}' -X PUT 'http://localhost:8080/?rest_route=/oncloud/v1/posts/01CITEST')" = 401
           test "$(curl -s -o /dev/null -w '%{http_code}' -X DELETE 'http://localhost:8080/?rest_route=/oncloud/v1/posts/01CITEST')" = 401
+      - name: Every template in English and Arabic (plan 4.4)
+        run: |
+          wp() { docker compose exec -T php vendor/bin/wp --path=web/wp "$@"; }
+          need() { grep -q -- "$2" "$1" || { echo "MISSING in $1: $2"; grep -o '<html[^>]*>' "$1"; head -c 3000 "$1"; exit 1; }; }
+          wp eval 'echo implode(",", pll_languages_list(["fields" => "slug"]));' | tee langs.txt
+          grep -qx 'en,ar' langs.txt
+          wp eval-file - < tests/ci-content.php | tee pages.txt
+          for p in article-en article-ar study-en study-ar; do
+            curl -fsS "http://localhost:8080$(grep "^$p " pages.txt | cut -d' ' -f2)" > "$p.html"
+          done
+          need article-en.html 'How we moved to the cloud'
+          need article-en.html 'wp-block-oncloud-author">Sara Al Hinai'
+          need article-en.html 'application/ld+json'
+          need article-en.html 'property="og:title" content="How we moved to the cloud — OnCloud CI"'
+          need article-en.html 'name="description" content="What a year took."'
+          need article-ar.html 'dir="rtl"'
+          need article-ar.html 'سارة الهنائية'
+          need article-ar.html 'hreflang="en'
+          need study-en.html 'wp-block-oncloud-type-label">Case study'
+          need study-ar.html 'dir="rtl"'
+          need study-ar.html 'wp-block-oncloud-type-label'
+          curl -fsS http://localhost:8080/case-studies/ > archive-en.html
+          need archive-en.html 'Al Bustan Logistics'
+          curl -fsS http://localhost:8080/ > home-en.html
+          need home-en.html 'How we moved to the cloud'
+          curl -fsS http://localhost:8080/ar/ > home-ar.html
+          need home-ar.html 'dir="rtl"'
       - name: The lock file this build resolved
         run: docker compose run --rm --no-deps -T php cat composer.lock > composer.lock
       - uses: actions/upload-artifact@v4
