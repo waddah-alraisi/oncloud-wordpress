@@ -3,6 +3,10 @@
 Every release is one image (`ghcr.io/waddah-alraisi/oncloud-wordpress-{php,nginx}:<version>`), rolled out to every
 site by the pipeline: build → staging → canary → shared network → Private Store servers (ADR 0052).
 
+## 0.3.1 — 24 Oct 2026
+
+- The companion at `e158959`: the reconciliation counts case studies too (Lane B).
+
 ## 0.3.0 — 24 Oct 2026
 
 - The companion 0.4.0 (`ae3639e`): articles and case studies from OnCloud (`PUT/DELETE /posts/{oncloud_id}`, plan 4.3),
