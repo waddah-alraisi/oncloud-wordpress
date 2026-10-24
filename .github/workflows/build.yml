@@ -56,7 +56,9 @@ jobs:
       - name: The companion takes OnCloud's articles and case studies, signed only (plan 4.3)
         run: |
           docker compose exec -T php vendor/bin/wp --path=web/wp eval 'echo ONCLOUD_VERSION, " ", post_type_exists("case_study") ? "case_study" : "none";' | grep -x '0.4.0 case_study'
+          # Unsigned, on plain permalinks as OnCloud calls them: refused by the companion (401), not by nginx (405).
           test "$(curl -s -o /dev/null -w '%{http_code}' -X PUT 'http://localhost:8080/?rest_route=/oncloud/v1/posts/01CITEST')" = 401
+          test "$(curl -s -o /dev/null -w '%{http_code}' -X DELETE 'http://localhost:8080/?rest_route=/oncloud/v1/posts/01CITEST')" = 401
       - name: The lock file this build resolved
         run: docker compose run --rm --no-deps -T php cat composer.lock > composer.lock
       - uses: actions/upload-artifact@v4

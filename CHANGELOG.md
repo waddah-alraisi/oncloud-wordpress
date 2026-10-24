@@ -8,6 +8,8 @@ site by the pipeline: build → staging → canary → shared network → Privat
 - The companion 0.4.0 (`ae3639e`): articles and case studies from OnCloud (`PUT/DELETE /posts/{oncloud_id}`, plan 4.3),
   a post per language linked by Polylang, the `case_study` post type at `/case-studies/`, SEO and JSON-LD in the page
   head; and Lane B's provisioning routes (`/register`, `/heartbeat`, `/reconciliation`).
+- nginx: the site's root goes to WordPress for every method. A `PUT` or `DELETE` to `/?rest_route=…` (OnCloud's calls on
+  plain permalinks) was answered 405 by nginx's directory index.
 - CI asserts the companion's version, the `case_study` post type and that `/posts` answers only signed requests.
 
 ## 0.2.0 — 23 Oct 2026
