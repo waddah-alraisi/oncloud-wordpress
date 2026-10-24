@@ -11,6 +11,7 @@ Plan 4.4 (part a): OnCloud's articles and case studies look right, in English an
   left under `/ar/`, case studies translatable.
 - Theme templates: `home`, `single` (date and author), `single-case_study`, `archive`, `archive-case_study`; blocks of
   its own: `oncloud/author`, `oncloud/type-label`, `oncloud/languages` (the language switch, in the header).
+- The companion 0.4.1 (`6c1f822`): case studies translated by Polylang, so an Arabic case study is under `/ar/`, right to left.
 - CI publishes an article and a case study through the companion and renders every template in both languages: the
   author, the description, Open Graph, JSON-LD, `dir="rtl"` and the hreflang links.
 
