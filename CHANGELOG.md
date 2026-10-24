@@ -3,6 +3,15 @@
 Every release is one image (`ghcr.io/waddah-alraisi/oncloud-wordpress-{php,nginx}:<version>`), rolled out to every
 site by the pipeline: build → staging → canary → shared network → Private Store servers (ADR 0052).
 
+## 0.5.0 — 24 Oct 2026
+
+Plan 4.4b: the live blocks.
+
+- The companion 0.5.0 (`388f48e`): `oncloud/products`, `oncloud/events`, `oncloud/wins`, `oncloud/proof` — what
+  OnCloud pushes of the workspace (only what it may show in public), drawn in the page's language.
+- The theme lays them out as a card grid (`theme.json` styles).
+- CI pushes the four blocks as OnCloud does and renders them on a page in English and Arabic.
+
 ## 0.4.0 — 24 Oct 2026
 
 Plan 4.4 (part a): OnCloud's articles and case studies look right, in English and Arabic.

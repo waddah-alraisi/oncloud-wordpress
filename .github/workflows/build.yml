@@ -55,7 +55,7 @@ jobs:
           docker compose exec -T php vendor/bin/wp --path=web/wp eval 'echo DISALLOW_FILE_MODS ? "locked" : "open";' | grep -x locked
       - name: The companion takes OnCloud's articles and case studies, signed only (plan 4.3)
         run: |
-          docker compose exec -T php vendor/bin/wp --path=web/wp eval 'echo ONCLOUD_VERSION, " ", post_type_exists("case_study") ? "case_study" : "none";' | grep -x '0.4.1 case_study'
+          docker compose exec -T php vendor/bin/wp --path=web/wp eval 'echo ONCLOUD_VERSION, " ", post_type_exists("case_study") ? "case_study" : "none";' | grep -x '0.5.0 case_study'
           # Unsigned, on plain permalinks as OnCloud calls them: refused by the companion (401), not by nginx (405).
           test "$(curl -s -o /dev/null -w '%{http_code}' -X PUT 'http://localhost:8080/?rest_route=/oncloud/v1/posts/01CITEST')" = 401
           test "$(curl -s -o /dev/null -w '%{http_code}' -X DELETE 'http://localhost:8080/?rest_route=/oncloud/v1/posts/01CITEST')" = 401
@@ -86,6 +86,22 @@ jobs:
           need home-en.html 'How we moved to the cloud'
           curl -fsS http://localhost:8080/ar/ > home-ar.html
           need home-ar.html 'dir="rtl"'
+          # The live blocks (plan 4.4b), drawn from what OnCloud pushed, in each page's language.
+          for p in live-en live-ar; do
+            curl -fsS "http://localhost:8080$(grep "^$p " pages.txt | cut -d' ' -f2)" > "$p.html"
+          done
+          need live-en.html 'wp-block-oncloud-products oncloud-live'
+          need live-en.html '<h3>Office coffee service</h3>'
+          need live-en.html 'OMR 45.000'
+          need live-en.html 'Gulf Retail Summit</a>'
+          need live-en.html '10 November 2026, 09:00'
+          need live-en.html '<p class="oncloud-client">Al Bustan Logistics</p>'
+          need live-en.html '99.9% uptime'
+          need live-ar.html 'dir="rtl"'
+          need live-ar.html '<h3>خدمة قهوة المكاتب</h3>'
+          need live-ar.html 'قمة التجزئة الخليجية</a>'
+          need live-ar.html 'لا توقف منذ الإطلاق.'
+          need live-ar.html 'توفر بنسبة 99.9%'
       - name: The lock file this build resolved
         run: docker compose run --rm --no-deps -T php cat composer.lock > composer.lock
       - uses: actions/upload-artifact@v4
