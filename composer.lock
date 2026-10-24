@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4aceb50aab4a4912d5421324e9496837",
+    "content-hash": "c1ab27c89f9c78f98fcf4920b205995b",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1221,12 +1221,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:waddah-alraisi/oncloud-wordpress-plugin.git",
-                "reference": "ae3639ef1712f450e8899c546b5990daa90e5a8b"
+                "reference": "e158959ccbaa77630d0edf0ffeb7a8fb1111ef96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/waddah-alraisi/oncloud-wordpress-plugin/zipball/ae3639ef1712f450e8899c546b5990daa90e5a8b",
-                "reference": "ae3639ef1712f450e8899c546b5990daa90e5a8b",
+                "url": "https://api.github.com/repos/waddah-alraisi/oncloud-wordpress-plugin/zipball/e158959ccbaa77630d0edf0ffeb7a8fb1111ef96",
+                "reference": "e158959ccbaa77630d0edf0ffeb7a8fb1111ef96",
                 "shasum": ""
             },
             "require": {
@@ -1253,10 +1253,10 @@
             ],
             "description": "The OnCloud companion plugin for WordPress and WooCommerce.",
             "support": {
-                "source": "https://github.com/waddah-alraisi/oncloud-wordpress-plugin/tree/claude/nice-ritchie-6gxblm",
+                "source": "https://github.com/waddah-alraisi/oncloud-wordpress-plugin/tree/main",
                 "issues": "https://github.com/waddah-alraisi/oncloud-wordpress-plugin/issues"
             },
-            "time": "2026-10-24T02:17:56+00:00"
+            "time": "2026-10-24T02:22:23+00:00"
         },
         {
             "name": "psr/container",
