@@ -17,7 +17,7 @@ RUN --mount=type=secret,id=composer_auth \
     if [ -f composer.lock ]; then composer install --no-dev --no-interaction --no-progress --prefer-dist; \
     else composer update --no-dev --no-interaction --no-progress --prefer-dist; fi
 COPY config ./config
-COPY web/index.php web/wp-config.php ./web/
+COPY web/index.php web/wp-config.php web/oncloud-tls.php ./web/
 COPY web/app/mu-plugins/oncloud-loader.php ./web/app/mu-plugins/
 COPY web/app/mu-plugins/oncloud-distribution ./web/app/mu-plugins/oncloud-distribution
 COPY web/app/themes/oncloud ./web/app/themes/oncloud

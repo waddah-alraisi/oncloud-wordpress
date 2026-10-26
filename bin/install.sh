@@ -8,7 +8,9 @@ title="${1:?site title}"
 email="${2:?admin email}"
 profile="${3:-general}"
 wp="vendor/bin/wp --path=web/wp"
-url="${WP_HOME:-http://${DOMAIN_CURRENT_SITE:-localhost}}"
+# Production is HTTPS (Caddy in front, deploy/); a local or CI run is plain HTTP.
+scheme="https"; [ "${ONCLOUD_ENV:-production}" = "local" ] && scheme="http"
+url="${WP_HOME:-$scheme://${DOMAIN_CURRENT_SITE:-localhost}}"
 password="$(php -r 'echo bin2hex(random_bytes(16));')"
 
 if [ "${ONCLOUD_NETWORK:-0}" = "1" ]; then

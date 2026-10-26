@@ -102,6 +102,17 @@ jobs:
           need live-ar.html 'قمة التجزئة الخليجية</a>'
           need live-ar.html 'لا توقف منذ الإطلاق.'
           need live-ar.html 'توفر بنسبة 99.9%'
+      - name: The certificate check answers only for this site's own host (deploy/Caddyfile)
+        run: |
+          test "$(curl -s -o /dev/null -w '%{http_code}' 'http://localhost:8080/oncloud-tls.php?domain=localhost')" = 200
+          test "$(curl -s -o /dev/null -w '%{http_code}' 'http://localhost:8080/oncloud-tls.php?domain=evil.example.com')" = 403
+          test "$(curl -s -o /dev/null -w '%{http_code}' 'http://localhost:8080/oncloud-tls.php?domain=bad..name')" = 400
+      - name: The production files are valid (deploy/)
+        run: |
+          sed -e 's/^DB_PASSWORD=$/DB_PASSWORD=ci/' -e 's/^DB_ROOT_PASSWORD=$/DB_ROOT_PASSWORD=ci/' deploy/.env.production.example > deploy/.env
+          docker compose -f deploy/compose.production.yaml --env-file deploy/.env config -q
+          docker run --rm -e ACME_EMAIL=ci@oncloud.om -v "$PWD/deploy/Caddyfile:/etc/caddy/Caddyfile:ro" caddy:2.8.4-alpine caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
+          rm deploy/.env
       - name: The lock file this build resolved
         run: docker compose run --rm --no-deps -T php cat composer.lock > composer.lock
       - uses: actions/upload-artifact@v4

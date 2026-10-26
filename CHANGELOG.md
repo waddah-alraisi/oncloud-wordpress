@@ -3,6 +3,19 @@
 Every release is one image (`ghcr.io/waddah-alraisi/oncloud-wordpress-{php,nginx}:<version>`), rolled out to every
 site by the pipeline: build → staging → canary → shared network → Private Store servers (ADR 0052).
 
+## 0.6.0 — 26 Oct 2026
+
+Production servers (decision 10: DigitalOcean droplets running Docker, no Forge).
+
+- `deploy/compose.production.yaml`: Caddy, nginx, php, MariaDB and Valkey. The images are pulled from ghcr.io at
+  `ONCLOUD_IMAGE_TAG`, never built on the server. The same file serves the shared network and a Private Store.
+- `deploy/Caddyfile`: HTTPS per host, issued on demand. Before each certificate Caddy asks `web/oncloud-tls.php`:
+  - on a single site, only `WP_HOME`'s host gets one;
+  - on the network, its main domain and each live site in its `blogs` table.
+  The public cannot reach the check.
+- `bin/install.sh`: HTTPS addresses outside `local`.
+- CI checks the certificate check's answers (200, 403, 400), the production compose file and the Caddyfile.
+
 ## 0.5.0 — 24 Oct 2026
 
 Plan 4.4b: the live blocks.

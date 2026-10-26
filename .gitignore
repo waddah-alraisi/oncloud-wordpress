@@ -5,3 +5,4 @@
 /web/app/uploads/
 /.env
 /build/
+/deploy/.env

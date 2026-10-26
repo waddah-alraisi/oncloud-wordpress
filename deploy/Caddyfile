@@ -1,0 +1,22 @@
+# HTTPS FOR AN ONCLOUD WORDPRESS SERVER (decision 10). Caddy gets each host's certificate from Let's Encrypt the first
+# time the host is asked for, after asking the site whether the host is one of ours (web/oncloud-tls.php, over the
+# server's internal network). DNS stays by hand: `*.sites.oncloud.om` and `sites.oncloud.om` point at this server.
+{
+	email {$ACME_EMAIL}
+	on_demand_tls {
+		ask http://nginx/oncloud-tls.php
+	}
+}
+
+https:// {
+	tls {
+		on_demand
+	}
+
+	# The certificate check is for Caddy alone, never the public.
+	@tls path /oncloud-tls.php
+	respond @tls 404
+
+	encode zstd gzip
+	reverse_proxy nginx:80
+}
