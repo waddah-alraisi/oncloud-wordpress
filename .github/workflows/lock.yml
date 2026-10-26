@@ -21,7 +21,7 @@ jobs:
     env:
       COMPOSER_AUTH: '{"github-oauth":{"github.com":"${{ secrets.PLUGIN_REPO_TOKEN }}"}}'
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: shivammathur/setup-php@v2
         with: { php-version: '8.5', tools: composer, extensions: mysqli, gd, intl, zip, exif, bcmath }
       - name: Add and pin, or refresh
