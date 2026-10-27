@@ -40,6 +40,22 @@ $tests = [
         return $off === false && $on === true;
     },
     'without the setting the content lock is on outside local' => fn () => Oncloud_Lockdown::contentLocked() === true,
+    'a site\'s .env sets what the environment does not, quotes and comments handled; the environment wins' => function () {
+        require_once dirname(__DIR__).'/config/dotenv.php';
+        $file = tempnam(sys_get_temp_dir(), 'oncloud-env');
+        file_put_contents($file, "# Forge\nONCLOUD_T_PLAIN=site\nONCLOUD_T_QUOTED=\"a b # c\"\nONCLOUD_T_SINGLE='x=y'\nONCLOUD_T_KEPT=file\nlower=ignored\nnot a line\n\n");
+        putenv('ONCLOUD_T_KEPT=environment');
+        $set = oncloud_load_dotenv($file);
+        $ok = getenv('ONCLOUD_T_PLAIN') === 'site' && getenv('ONCLOUD_T_QUOTED') === 'a b # c' && getenv('ONCLOUD_T_SINGLE') === 'x=y'
+            && getenv('ONCLOUD_T_KEPT') === 'environment' && getenv('lower') === false
+            && $set === ['ONCLOUD_T_PLAIN', 'ONCLOUD_T_QUOTED', 'ONCLOUD_T_SINGLE'];
+        foreach (['ONCLOUD_T_PLAIN', 'ONCLOUD_T_QUOTED', 'ONCLOUD_T_SINGLE', 'ONCLOUD_T_KEPT'] as $k) {
+            putenv($k);
+        }
+        unlink($file);
+
+        return $ok && oncloud_load_dotenv('/nonexistent/.env') === [];
+    },
     'the headers close framing and sniffing' => fn () => Oncloud_Lockdown::headers()['X-Frame-Options'] === 'SAMEORIGIN' && Oncloud_Lockdown::headers()['X-Content-Type-Options'] === 'nosniff',
 ];
 

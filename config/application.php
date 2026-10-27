@@ -1,7 +1,8 @@
 <?php
 /**
  * AN ONCLOUD SITE'S CONFIGURATION (ADR 0052) — every value from the environment, never from a file in the image, so
- * one image serves every site and a rebuild needs only the environment and OnCloud's data.
+ * one image serves every site and a rebuild needs only the environment and OnCloud's data. On a Forge server the
+ * environment is the site's .env (config/dotenv.php); real environment variables win over it.
  *
  *   ONCLOUD_ENV          production | staging | local                     (default production)
  *   ONCLOUD_PLAN         site | storefront | private_store                (OnCloud Site, Storefront, Private Store)
@@ -16,6 +17,10 @@
  * HARDENING, always on outside `local`: no file editor, no plugin or theme installs or updates from the dashboard, no
  * automatic updates — the code changes only by a new image from this repository.
  */
+
+// On a Forge server the settings are in the site's .env; real environment variables (Docker, CI) win. @see dotenv.php
+require_once __DIR__.'/dotenv.php';
+oncloud_load_dotenv(dirname(__DIR__).'/.env');
 
 $env = static function (string $key, ?string $default = null): ?string {
     $value = getenv($key);

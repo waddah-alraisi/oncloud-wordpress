@@ -3,6 +3,15 @@
 Every release is one image (`ghcr.io/waddah-alraisi/oncloud-wordpress-{php,nginx}:<version>`), rolled out to every
 site by the pipeline: build → staging → canary → shared network → Private Store servers (ADR 0052).
 
+## 0.7.0 — 27 Oct 2026
+
+Forge (decision 10 revised: DigitalOcean servers managed by Laravel Forge, unlimited servers).
+
+- `config/dotenv.php`: a site's settings may sit in `.env` at its root, as Forge keeps them. Real environment
+  variables (Docker, CI) always win. Tested in `tests/run.php`.
+- `deploy/forge/`: the deploy script, the nginx rules and the cron job for a Forge site.
+- The Docker production files of 0.6.0 stay as the tested fallback.
+
 ## 0.6.0 — 26 Oct 2026
 
 Production servers (decision 10: DigitalOcean droplets running Docker, no Forge).
