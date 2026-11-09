@@ -3,6 +3,16 @@
 Every release is one image (`ghcr.io/waddah-alraisi/oncloud-wordpress-{php,nginx}:<version>`), rolled out to every
 site by the pipeline: build → staging → canary → shared network → Private Store servers (ADR 0052).
 
+## 0.7.1 — 9 Nov 2026
+
+Plan 4.1b: blog categories and tags.
+
+- The companion 0.6.1 (`d56f1ff`): OnCloud's categories and tags on each post, in English and Arabic, linked by
+  Polylang, a category under its parent; a category or tag made here with the same slug is linked, never renamed by
+  OnCloud; no term is deleted.
+- CI pushes one post with a category under a parent, two tags and a hand-made category with the same slug
+  (`tests/ci-terms.php`), and renames OnCloud's category.
+
 ## 0.7.0 — 27 Oct 2026
 
 Forge (decision 10 revised: DigitalOcean servers managed by Laravel Forge, unlimited servers).
