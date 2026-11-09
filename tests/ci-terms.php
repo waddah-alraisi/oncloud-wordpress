@@ -1,6 +1,6 @@
 <?php
 /**
- * CI ONLY (plan 4.1b, companion 0.6.1): a post's categories and tags, pushed as OnCloud pushes them, through the
+ * CI ONLY (plan 4.1b, companion 0.6.2): a post's categories and tags, pushed as OnCloud pushes them, through the
  * companion's own Oncloud_Posts::upsert() with the real WordPress and Polylang. One post in English and Arabic, a
  * category under a parent, two tags, and a category made here by hand with the same slug as OnCloud's parent: it is
  * linked, never renamed. Prints `ok …` lines; any failure stops with an error.

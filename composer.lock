@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c576a9ca49b70a74304d91d8204b3412",
+    "content-hash": "9158dc26c465de3ee9ea23628de0b4ed",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1221,12 +1221,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:waddah-alraisi/oncloud-wordpress-plugin.git",
-                "reference": "d56f1ff08742c00d9787719f7b01beb20c1d995d"
+                "reference": "4244ad2cb42c3065f657050f2cafa3009a219b62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/waddah-alraisi/oncloud-wordpress-plugin/zipball/d56f1ff08742c00d9787719f7b01beb20c1d995d",
-                "reference": "d56f1ff08742c00d9787719f7b01beb20c1d995d",
+                "url": "https://api.github.com/repos/waddah-alraisi/oncloud-wordpress-plugin/zipball/4244ad2cb42c3065f657050f2cafa3009a219b62",
+                "reference": "4244ad2cb42c3065f657050f2cafa3009a219b62",
                 "shasum": ""
             },
             "require": {
@@ -1256,7 +1256,7 @@
                 "source": "https://github.com/waddah-alraisi/oncloud-wordpress-plugin/tree/main",
                 "issues": "https://github.com/waddah-alraisi/oncloud-wordpress-plugin/issues"
             },
-            "time": "2026-11-09T01:21:05+00:00"
+            "time": "2026-11-09T01:30:12+00:00"
         },
         {
             "name": "psr/container",
