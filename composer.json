@@ -19,7 +19,7 @@
         "composer/installers": "2.3.0",
         "oncloud/oncloud-wordpress-plugin": "dev-main#4244ad2cb42c3065f657050f2cafa3009a219b62",
         "roots/wordpress-core-installer": "4.0.0",
-        "roots/wordpress-no-content": "7.1.3",
+        "roots/wordpress-no-content": "7.1.4",
         "wp-cli/wp-cli-bundle": "2.12.0",
         "wpackagist-plugin/polylang": "3.9.1",
         "wpackagist-plugin/woocommerce": "11.2.1"
