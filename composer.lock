@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9158dc26c465de3ee9ea23628de0b4ed",
+    "content-hash": "9bbd725124aea42a89c684d77c4cc01c",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -5229,15 +5229,15 @@
         },
         {
             "name": "wpackagist-plugin/polylang",
-            "version": "3.9.1",
+            "version": "3.9.2",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/polylang/",
-                "reference": "tags/3.9.1"
+                "reference": "tags/3.9.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/polylang.3.9.1.zip"
+                "url": "https://downloads.wordpress.org/plugin/polylang.3.9.2.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
