@@ -7,9 +7,10 @@ site by the pipeline: build → staging → canary → shared network → Privat
 
 Plan 4.1b: blog categories and tags.
 
-- The companion 0.6.1 (`d56f1ff`): OnCloud's categories and tags on each post, in English and Arabic, linked by
+- The companion 0.6.2 (`4244ad2`): OnCloud's categories and tags on each post, in English and Arabic, linked by
   Polylang, a category under its parent; a category or tag made here with the same slug is linked, never renamed by
-  OnCloud; no term is deleted.
+  OnCloud; no term is deleted. (0.6.1, `d56f1ff`, failed this build's check: WordPress made `news-2` beside the
+  site's own `news`; 0.6.2 looks the slug up first.)
 - CI pushes one post with a category under a parent, two tags and a hand-made category with the same slug
   (`tests/ci-terms.php`), and renames OnCloud's category.
 

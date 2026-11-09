@@ -17,7 +17,7 @@
     "require": {
         "php": ">=8.3",
         "composer/installers": "2.3.0",
-        "oncloud/oncloud-wordpress-plugin": "dev-main#d56f1ff08742c00d9787719f7b01beb20c1d995d",
+        "oncloud/oncloud-wordpress-plugin": "dev-main#4244ad2cb42c3065f657050f2cafa3009a219b62",
         "roots/wordpress-core-installer": "4.0.0",
         "roots/wordpress-no-content": "7.1.3",
         "wp-cli/wp-cli-bundle": "2.12.0",
